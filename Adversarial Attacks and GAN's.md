@@ -283,6 +283,8 @@ $$
 - используется adaptive instance normalization
 - достигается высокая управляемость генерации
 
+---
+
 # Ссылки (arXiv)
 
 Adversarial attacks:
