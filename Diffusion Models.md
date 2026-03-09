@@ -1,5 +1,5 @@
 ---
-titile: "Diffusion models 1"
+title: "Diffusion models 1"
 slug: "diffusion-models-1"
 date: 2026-03-09
 draft: false
