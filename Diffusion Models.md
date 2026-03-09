@@ -155,29 +155,23 @@ $$q(x_{t-1}|x_t)$$
 
 $$p_\theta(x_{t-1}|x_t)=\mathcal N(x_{t-1}|\mu_\theta(x_t),\sigma_t^2 I)$$
 
-# Генерация изображений (Sampling)
+## Генерация изображений (Sampling)
 
 Процесс генерации изображения повторяет обратный диффузионный процесс.
 
-1.
-
-$$x_T \sim \mathcal N(0,I)$$
-
-2.
-
-для $t=T\dots1$
+$$x_T \sim \mathcal N(0,I),\quad t=T\dots1$$
 
 $$x_{t-1}=\mu_\theta(x_t)+\sigma_t\epsilon$$
 
-# Вероятностные цепочки процесса
+## Вероятностные цепочки процесса
 
-## Forward chain
+### Forward chain
 
 Полная вероятность прямого процесса:
 
 $$q_{0:T}(x_0\dots x_T)=q(x_0)\prod_{t=1}^{T}q(x_t|x_{t-1})$$
 
-## Reverse chain
+### Reverse chain
 
 Параметризованная обратная цепочка:
 
@@ -209,19 +203,19 @@ $$\mathbb E_q\left[\log q(x_0)+\sum\log q(x_t|x_{t-1})-\log p(x_T)-\sum\log p_\t
 
 $$\sum_{t=2}^{T}\mathbb E\left[KL(q(x_{t-1}|x_t,x_0)||p_\theta(x_{t-1}|x_t))\right]$$
 
-# Постериорное распределение forward-процесса
+## Постериорное распределение forward-процесса
 
 Для вычисления KL необходимо знать распределение $q(x_{t-1}|x_t,x_0)$. Можно показать, что оно также является гауссовским.
 
 $$q(x_{t-1}|x_t,x_0)=\mathcal N(x_{t-1}|A_t x_t + B_t x_0,C_t^2 I)$$
 
-# Параметризация обратной модели
+## Параметризация обратной модели
 
 Нейросеть моделирует распределение
 
 $$p_\theta(x_{t-1}|x_t)=\mathcal N(x_{t-1}|\mu_\theta(x_t),\sigma_t^2 I)$$
 
-# KL между гауссовскими распределениями
+## KL между гауссовскими распределениями
 
 Если
 
@@ -233,7 +227,7 @@ $$KL(p||q)\propto||\mu_1-\mu_2||^2$$
 
 Поэтому оптимизация KL сводится к минимизации квадратичной ошибки между средними.
 
-# Параметризация среднего
+## Параметризация среднего
 
 Objective становится
 
@@ -249,7 +243,7 @@ $$\mu_\theta(x_t)=A_t x_t + B_t D_\theta(x_t)$$
 
 $$\sum w_t||D_\theta(x_t)-x_0||^2$$
 
-# Переход к $\epsilon$-prediction
+## Переход к $\epsilon$-prediction
 
 Используем формулу forward-процесса, связывающую зашумлённое изображение с исходным и шумом.
 
@@ -263,11 +257,11 @@ $$x_0=\frac{x_t-\sqrt{1-\alpha_t}\epsilon}{\sqrt{\alpha_t}}$$
 
 $$\sum\mathbb E[||\epsilon_\theta(x_t,t)-\epsilon||^2]$$
 
-# Финальная функция потерь
+## Финальная функция потерь
 
 $$L_{\text{simple}}=\mathbb E_{t,x_0,\epsilon}[\|\epsilon-\epsilon_\theta(\sqrt{\alpha_t}x_0+\sqrt{1-\alpha_t}\epsilon,t)\|^2]$$
 
-# Шаг обучения
+## Шаг обучения
 
 Пусть batch size равен $B$.
 
@@ -281,7 +275,7 @@ $$x_t=\sqrt{\alpha_t}x_0+\sqrt{1-\alpha_t}\epsilon$$
 
 $$\frac1B\sum\|\epsilon_\theta(x_t,t)-\epsilon\|^2$$
 
-# Sampling
+## Sampling
 
 $$x_T \sim \mathcal N(0,I)$$
 
